@@ -2,7 +2,7 @@
     <div
         class="grid justify-between grid-cols-[auto_1fr] gap-4 px-6 py-4 text-sm bg-white rounded-md dark:text-white dark:bg-slate-800">
         <checkbox v-model="todoItem.completed" />
-        <input v-model="todoItem.text" type="text" placeholder="Create a new todo..." @keyup.enter="submit"
+        <input v-model.trim="todoItem.text" type="text" placeholder="Create a new todo..." @keyup.enter="submit"
             class="outline-none dark:bg-slate-800">
     </div>
 </template>
@@ -26,7 +26,7 @@ const todoItem: Ref<TodoItem> = ref({
 const id: Ref<number> = ref(todoItem.value.id);
 
 const submit = () => {
-    if (todoItem.value.text.trim() !== '') {
+    if (todoItem.value.text !== '') {
         todoStore.addTodoItem({
             id: id.value++,
             text: todoItem.value.text,
