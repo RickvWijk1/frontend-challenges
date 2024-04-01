@@ -1,14 +1,21 @@
 /** @type {import('tailwindcss').Config} */
-const colors = require('tailwindcss/colors')
 
 module.exports = {
   content: [],
   purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   darkMode: 'selector',
   theme: {
-    backgroundImage: {
-      'hero-img-light': "url('./frontend-mentor/images/bg-mobile-light.jpg')",
-      'hero-img-dark': "url('./frontend-mentor/images/bg-mobile-dark.jpg')"
+    extend: {
+      backgroundImage: {
+        'hero-img-light': "url('./frontend-mentor/images/bg-mobile-light.jpg')",
+        'hero-img-dark': "url('./frontend-mentor/images/bg-mobile-dark.jpg')"
+      },
+      colors: {
+        gradient: {
+          blue: 'hsl(192, 100%, 67%)',
+          purple: 'hsl(280, 87%, 65%)'
+        }
+      }
     },
     letterSpacing: {
       tightest: '-.075em',

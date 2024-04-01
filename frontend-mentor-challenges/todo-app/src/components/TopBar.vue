@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, defineAsyncComponent, watch } from 'vue';
+import { computed, defineAsyncComponent } from 'vue';
 import { useThemeStore } from '@/stores/theme';
 
 const themeStore = useThemeStore();
