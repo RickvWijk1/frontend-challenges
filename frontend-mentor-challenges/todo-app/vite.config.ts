@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/frontend-challenges/frontend-mentor-challenges/todo-app/",
+  base: "/frontend-challenges/",
   plugins: [
     vue({
       script: {
