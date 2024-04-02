@@ -3,7 +3,6 @@
     <hero-background />
     <div class="absolute inset-0 z-10 flex flex-col gap-10 px-6 pt-10">
       <top-bar />
-      <p>swet</p>
       <section class="relative flex flex-col gap-6">
         <todo-input />
         <todo-list />
