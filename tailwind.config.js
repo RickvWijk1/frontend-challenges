@@ -6,8 +6,8 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'hero-img-light': "url('./frontend-mentor/images/bg-mobile-light.jpg')",
-        'hero-img-dark': "url('./frontend-mentor/images/bg-mobile-dark.jpg')"
+        'hero-img-light': "url('/images/bg-mobile-light.jpg')",
+        'hero-img-dark': "url('/images/bg-mobile-dark.jpg')"
       },
       colors: {
         gradient: {
