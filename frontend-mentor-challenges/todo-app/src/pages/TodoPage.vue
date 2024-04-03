@@ -5,7 +5,6 @@
       <top-bar />
       <section class="relative flex flex-col gap-6">
         <todo-input />
-        d
         <todo-list />
       </section>
     </div>
