@@ -11,12 +11,6 @@ import { useTodoStore } from '@/stores/todo';
 import { ref, type Ref } from 'vue';
 import Checkbox from '@/components/Checkbox.vue';
 
-interface TodoItem {
-    id: number,
-    text: string,
-    completed: boolean
-}
-
 const todoStore = useTodoStore();
 const todoItem: Ref<TodoItem> = ref({
     id: 1,
