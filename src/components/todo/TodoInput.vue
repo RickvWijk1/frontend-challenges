@@ -1,6 +1,6 @@
 <template>
     <div
-        class="grid justify-between grid-cols-[auto_1fr] gap-4 px-6 py-4 text-sm bg-white rounded-md dark:text-white dark:bg-slate-800">
+        class="grid justify-between grid-cols-[auto_1fr] gap-4 px-6 py-4 bg-white rounded-md dark:text-white dark:bg-slate-800">
         <checkbox v-model="todoItem.completed" />
         <input v-model.trim="todoItem.text" type="text" placeholder="Create a new todo..." @keyup.enter="submit"
             class="outline-none dark:bg-slate-800">
