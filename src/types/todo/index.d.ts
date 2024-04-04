@@ -3,3 +3,8 @@ declare interface TodoItem {
     text: string,
     completed: boolean
 }
+
+declare interface Movie {
+    id: number,
+    name: string,
+}
