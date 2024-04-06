@@ -55,10 +55,6 @@ const removeTodoItem = (id: number) => {
     todoStore.deleteTodoItem(id);
 }
 
-const getMovies = async () => {
-
-}
-
 const getTodoItems = async () => {
     try {
         const todoResponse = await axios.get<ApiTodo[]>('https://dummyapi.online/api/todos');
