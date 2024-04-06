@@ -12,31 +12,27 @@
                 <icon-cross class="cursor-pointer" @click="removeTodoItem(item.id)" />
             </div>
         </div>
-        <div v-for="movie in movieList" :key="movie.id">
-            {{ movie.name }}
-        </div>
     </div>
 </template>
 <script setup lang="ts">
 import { computed, onMounted, ref, type Ref } from 'vue';
-import axios from 'axios'
+import axios from 'axios';
 import { useTodoStore } from '@/stores/todo';
 import Checkbox from '@/components/Checkbox.vue';
 import IconCross from '@/components/icons/IconCross.vue';
+import { getApiData } from '@/api/todo/index';
 import IconDrag from '@/components/icons/IconDrag.vue';
-
-
-interface ExpectMovie {
-    id: number;
-    movie: string;
-    rating: number;
-    image: string;
-    imdb_url: string;
-}
 
 const todoStore = useTodoStore();
 const list = computed(() => todoStore.todoList);
-const movieList: Ref<Array<Movie>> = ref([]);
+const todoList: Ref<Array<TodoItem>> = ref([]);
+
+interface ApiTodo {
+    id: number;
+    title: string;
+    completed: boolean;
+    priority: string;
+}
 
 
 const startDrag = ((event: DragEvent, index: number) => {
@@ -60,24 +56,27 @@ const removeTodoItem = (id: number) => {
 }
 
 const getMovies = async () => {
-    try {
-        const moviesResponse = await axios.get<ExpectMovie[]>('https://dummyapi.online/api/movies');
-        const mapMovies = moviesResponse.data.map(movie => ({
-            id: movie.id,
-            name: movie.movie,
-            rating: movie.rating,
-            image: movie.image,
-            imdb_url: movie.imdb_url
-        }));
-        movieList.value = mapMovies;
 
+}
+
+const getTodoItems = async () => {
+    try {
+        const todoResponse = await axios.get<ApiTodo[]>('https://dummyapi.online/api/todos');
+        const mapTodos = todoResponse.data.map(todo => ({
+            id: todo.id,
+            text: todo.title,
+            completed: todo.completed,
+            priority: todo.priority,
+        }));
+        todoList.value = mapTodos;
+        list.value.push(...todoList.value);
     } catch (error) {
-        console.error('Error fetching movies:', error);
+        console.error('Error fetching todo items:', error);
     }
 }
 
 onMounted(async () => {
-   await getMovies();
+    await getTodoItems();
 });
 
 </script>
