@@ -6,7 +6,7 @@ export const useTodoStore = defineStore('todo', () => {
     const todoList = ref<Array<TodoItem>>([]);
     
     const addTodoItem = (todo: TodoItem) => {
-      todoList.value.push(todo);
+      todoList.value.unshift(todo);
     }
     
     const deleteTodoItem = (id: number) => {
