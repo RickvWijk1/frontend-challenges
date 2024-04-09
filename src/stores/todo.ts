@@ -10,7 +10,11 @@ export const useTodoStore = defineStore('todo', () => {
     }
     
     const deleteTodoItem = (id: number) => {
-    todoList.value = todoList.value.filter(item => item.id !== id)
+        todoList.value = todoList.value.filter(item => item.id !== id)
+    }
+
+    const deleteCompletedItems = () => {
+        todoList.value = todoList.value.filter(item => !item.completed);
     }
 
     const getTodoItems = async () => {
@@ -31,6 +35,7 @@ export const useTodoStore = defineStore('todo', () => {
         todoList,
         addTodoItem,
         deleteTodoItem,
+        deleteCompletedItems,
         getTodoItems
     }
 });

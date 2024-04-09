@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-6 bg-white rounded-md shadow-xl dark:bg-slate-800 dark:text-white">
+    <div class="bg-white rounded-md shadow-xl dark:bg-slate-800 dark:text-white w-full">
         <div class="px-6 py-4 border border-gray-200 border-solid dark:border-gray-700 dark:border first:rounded-t-md last:rounded-b-md"
             v-for="(item, index) in list" draggable="true" @dragstart="startDrag($event, index)"
             @drop="onDrop($event, index)" @dragover.prevent @dragenter.prevent :key="item.id">
@@ -12,7 +12,10 @@
                 <icon-cross class="cursor-pointer" @click="removeTodoItem(item.id)" />
             </div>
         </div>
-        <div class="">HI</div>
+        <div class="flex justify-between px-6 py-4 text-gray-400">
+            <span class="">{{ uncompletedItems.length }} uncompleted items</span>
+            <span class="cursor-pointer" @click="removeCompletedItems">Clear Completed</span>
+        </div>
     </div>
 </template>
 <script setup lang="ts">
@@ -34,6 +37,10 @@ interface ApiTodo {
     priority: string;
 }
 
+const uncompletedItems = computed(() => {
+    console.log('hi')
+   return list.value.filter((item) => !item.completed);
+})
 
 const startDrag = ((event: DragEvent, index: number) => {
     if (event.dataTransfer) {
@@ -53,6 +60,10 @@ const onDrop = ((event: DragEvent, targetIndex: number) => {
 
 const removeTodoItem = (id: number) => {
     todoStore.deleteTodoItem(id);
+}
+
+const removeCompletedItems = () => {
+    todoStore.deleteCompletedItems();
 }
 
 const getTodoItems = async () => {
