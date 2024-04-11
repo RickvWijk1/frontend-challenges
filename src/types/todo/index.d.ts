@@ -3,3 +3,5 @@ declare interface TodoItem {
     text: string,
     completed: boolean
 }
+
+declare type Filters = 'All' | 'Active' | 'Completed';

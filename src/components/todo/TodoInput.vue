@@ -8,7 +8,7 @@
 </template>
 <script setup lang="ts">
 import { useTodoStore } from '@/stores/todo';
-import { ref, type Ref } from 'vue';
+import { computed, onMounted, ref, type Ref, watch } from 'vue';
 import Checkbox from '@/components/Checkbox.vue';
 
 const todoStore = useTodoStore();
@@ -17,18 +17,28 @@ const todoItem: Ref<TodoItem> = ref({
     text: '',
     completed: false
 })
-const id: Ref<number> = ref(todoItem.value.id);
 
+const list = computed(() => todoStore.todoList);
+const lastItem = computed(() => list.value.slice(-1)[0]);
 const submit = () => {
+
     if (todoItem.value.text !== '') {
         todoStore.addTodoItem({
-            id: id.value++,
+            id: lastItem.value.id++,
             text: todoItem.value.text,
             completed: todoItem.value.completed
         });
 
         todoItem.value.text = '';
     }
-}
+};
+
+onMounted(async () => {
+    getTodoList();
+});
+
+const getTodoList = async () => {
+    await todoStore.getTodoItems();
+};
 
 </script>

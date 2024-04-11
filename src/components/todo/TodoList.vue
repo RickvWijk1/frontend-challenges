@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white rounded-md shadow-xl dark:bg-slate-800 dark:text-white w-full">
+    <div class="w-full bg-white rounded-md shadow-xl dark:bg-slate-800 dark:text-white">
         <div class="px-6 py-4 border border-gray-200 border-solid dark:border-gray-700 dark:border first:rounded-t-md last:rounded-b-md"
             v-for="(item, index) in list" draggable="true" @dragstart="startDrag($event, index)"
             @drop="onDrop($event, index)" @dragover.prevent @dragenter.prevent :key="item.id">
@@ -13,35 +13,24 @@
             </div>
         </div>
         <div class="flex justify-between px-6 py-4 text-gray-400">
-            <span class="">{{ uncompletedItems.length }} uncompleted items</span>
+            <!-- <span class="">{{ uncompletedItems.length }} uncompleted items</span> -->
             <span class="cursor-pointer" @click="removeCompletedItems">Clear Completed</span>
         </div>
     </div>
 </template>
 <script setup lang="ts">
 import { computed, onMounted, ref, type Ref } from 'vue';
-import axios from 'axios';
 import { useTodoStore } from '@/stores/todo';
 import Checkbox from '@/components/Checkbox.vue';
 import IconCross from '@/components/icons/IconCross.vue';
 import IconDrag from '@/components/icons/IconDrag.vue';
 
 const todoStore = useTodoStore();
-const list = computed(() => todoStore.todoList);
-const todoList: Ref<Array<TodoItem>> = ref([]);
+const list = computed(() => todoStore.filteredList);
 
-interface ApiTodo {
-    id: number;
-    title: string;
-    completed: boolean;
-    priority: string;
-}
-
-const uncompletedItems = computed(() => {
-   return list.value.filter((item) => !item.completed);
-});
-
-
+// const uncompletedItems = computed(() => {
+//     return list.value.filter((item: TodoItem) => !item.completed);
+// });
 
 const startDrag = ((event: DragEvent, index: number) => {
     if (event.dataTransfer) {
@@ -68,19 +57,7 @@ const removeCompletedItems = () => {
 }
 
 const getTodoItems = async () => {
-    try {
-        const todoResponse = await axios.get<ApiTodo[]>('https://dummyapi.online/api/todos');
-        const mapTodos = todoResponse.data.map(todo => ({
-            id: todo.id,
-            text: todo.title,
-            completed: todo.completed,
-            priority: todo.priority,
-        }));
-        todoList.value = mapTodos;
-        list.value.push(...todoList.value);
-    } catch (error) {
-        console.error('Error fetching todo items:', error);
-    }
+    todoStore.getTodoItems();
 }
 
 onMounted(async () => {
