@@ -38,9 +38,10 @@ interface ApiTodo {
 }
 
 const uncompletedItems = computed(() => {
-    console.log('hi')
    return list.value.filter((item) => !item.completed);
-})
+});
+
+
 
 const startDrag = ((event: DragEvent, index: number) => {
     if (event.dataTransfer) {

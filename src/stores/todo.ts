@@ -1,10 +1,23 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { getApiData } from '@/api/todo';
 
 export const useTodoStore = defineStore('todo', () => {
+    // state
     const todoList = ref<Array<TodoItem>>([]);
     
+    //getters
+    const getAllItems = () => todoList.value;
+
+    const getCompletedItems = () => {
+        todoList.value = todoList.value.filter(item => item.completed);
+    }
+
+    const getUncompletedItems = () => {
+        todoList.value = todoList.value.filter((item) => !item.completed);
+    }
+
+    // actions
     const addTodoItem = (todo: TodoItem) => {
       todoList.value.unshift(todo);
     }
@@ -33,9 +46,12 @@ export const useTodoStore = defineStore('todo', () => {
 
     return {
         todoList,
+        getAllItems,
+        getCompletedItems,
+        getUncompletedItems,
         addTodoItem,
         deleteTodoItem,
         deleteCompletedItems,
-        getTodoItems
+        getTodoItems,
     }
 });

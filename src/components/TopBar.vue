@@ -1,5 +1,5 @@
 <template>
-    <div class="grid justify-between grid-cols-[1fr_auto] bg-transparent items-center">
+    <div class="z-10 grid justify-between grid-cols-[1fr_auto] bg-transparent items-center">
         <h1 class="text-4xl font-bold tracking-wider text-white">TODO</h1>
         <component :is="switchTheme" @click="themeStore.toggleTheme" class="cursor-pointer" />
     </div>
