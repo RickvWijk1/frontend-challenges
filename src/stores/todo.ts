@@ -10,24 +10,25 @@ export const useTodoStore = defineStore('todo', () => {
     //getters
     const filteredList = computed(() => {
         if (currentFilter.value === 'All') {
-            return todoList.value;
+            return getAllItems.value;
         } else if (currentFilter.value === 'Active') {
-            return todoList.value.filter(item => !item.completed);
+            return getUncompletedItems.value;
         } else if (currentFilter.value === 'Completed') {
-            return todoList.value.filter(item => item.completed);
+            return getCompletedItems.value;
         }
         return [];
     });
     
-    const getAllItems = () => todoList.value;
+    const getAllItems = computed(() => todoList.value);
 
-    const getCompletedItems = () => {
-        todoList.value = todoList.value.filter(item => item.completed);
-    }
+    const getCompletedItems = computed(() => {
+        return todoList.value.filter((item: TodoItem) => item.completed);
+    });
 
-    const getUncompletedItems = () => {
-        todoList.value = todoList.value.filter((item) => !item.completed);
-    }
+    const getUncompletedItems = computed(() => {
+        console.log('hi')
+        return todoList.value.filter((item: TodoItem) => !item.completed);
+    });
 
     // actions
     const addTodoItem = (todo: TodoItem) => {
@@ -35,11 +36,11 @@ export const useTodoStore = defineStore('todo', () => {
     }
     
     const deleteTodoItem = (id: number) => {
-        todoList.value = todoList.value.filter(item => item.id !== id)
+        todoList.value = todoList.value.filter((item: TodoItem) => item.id !== id)
     }
 
     const deleteCompletedItems = () => {
-        todoList.value = todoList.value.filter(item => !item.completed);
+        todoList.value = todoList.value.filter((item: TodoItem) => !item.completed);
     }
 
     const getTodoItems = async () => {

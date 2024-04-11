@@ -13,13 +13,16 @@
             </div>
         </div>
         <div class="flex justify-between px-6 py-4 text-gray-400">
-            <!-- <span class="">{{ uncompletedItems.length }} uncompleted items</span> -->
-            <span class="cursor-pointer" @click="removeCompletedItems">Clear Completed</span>
+            <span class="" v-if="todoStore.currentFilter !== 'Completed'">{{
+                numberOfUncompletedItems }}
+                uncompleted items</span>
+            <span class="order-last ml-auto cursor-pointer" @click="removeCompletedItems">Clear
+                Completed</span>
         </div>
     </div>
 </template>
 <script setup lang="ts">
-import { computed, onMounted, ref, type Ref } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useTodoStore } from '@/stores/todo';
 import Checkbox from '@/components/Checkbox.vue';
 import IconCross from '@/components/icons/IconCross.vue';
@@ -28,9 +31,9 @@ import IconDrag from '@/components/icons/IconDrag.vue';
 const todoStore = useTodoStore();
 const list = computed(() => todoStore.filteredList);
 
-// const uncompletedItems = computed(() => {
-//     return list.value.filter((item: TodoItem) => !item.completed);
-// });
+const numberOfUncompletedItems = computed(() => {
+    return todoStore.getUncompletedItems.length;
+});
 
 const startDrag = ((event: DragEvent, index: number) => {
     if (event.dataTransfer) {
