@@ -26,7 +26,6 @@ export const useTodoStore = defineStore('todo', () => {
     });
 
     const getUncompletedItems = computed(() => {
-        console.log('hi')
         return todoList.value.filter((item: TodoItem) => !item.completed);
     });
 

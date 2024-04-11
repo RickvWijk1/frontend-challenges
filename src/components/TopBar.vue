@@ -14,9 +14,9 @@ const themeStore = useThemeStore();
 
 const switchTheme = computed(() => {
     if (themeStore.showDarkTheme) {
-        return defineAsyncComponent(() => import('@/components/icons/IconMoon.vue'));
+        return defineAsyncComponent(() => import('@/components/icons/IconSun.vue'));
     }
 
-    return defineAsyncComponent(() => import('@/components/icons/IconSun.vue'));
+    return defineAsyncComponent(() => import('@/components/icons/IconMoon.vue'));
 });
 </script>

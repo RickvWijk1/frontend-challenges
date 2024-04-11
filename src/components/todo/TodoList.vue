@@ -13,10 +13,10 @@
             </div>
         </div>
         <div class="flex justify-between px-6 py-4 text-gray-400">
-            <span class="" v-if="todoStore.currentFilter !== 'Completed'">{{
-                numberOfUncompletedItems }}
-                uncompleted items</span>
-            <span class="order-last ml-auto cursor-pointer" @click="removeCompletedItems">Clear
+            <span>{{ numberOfUncompletedItems }} uncompleted items</span>
+            <todo-filters v-if="!deviceStore.mobile" />
+            <span class="ml-auto cursor-pointer sm:ml-0 dark:hover:text-white hover:text-black"
+                @click="removeCompletedItems">Clear
                 Completed</span>
         </div>
     </div>
@@ -24,11 +24,15 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue';
 import { useTodoStore } from '@/stores/todo';
+import { useDeviceStore } from '@/stores/device';
 import Checkbox from '@/components/Checkbox.vue';
 import IconCross from '@/components/icons/IconCross.vue';
 import IconDrag from '@/components/icons/IconDrag.vue';
+import TodoFilters from '@/components/todo/TodoFilters.vue';
 
 const todoStore = useTodoStore();
+const deviceStore = useDeviceStore();
+
 const list = computed(() => todoStore.filteredList);
 
 const numberOfUncompletedItems = computed(() => {
