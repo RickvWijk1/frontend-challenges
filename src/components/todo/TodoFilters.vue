@@ -2,8 +2,8 @@
     <div
         class="grid sm:p-0 sm:w-auto w-full justify-center grid-cols-[auto_auto_auto] gap-4 px-6 py-4 bg-white rounded-md dark:bg-slate-800">
         <span v-for="filter in filters" :key="filter" @click="setFilter(filter)"
-            class="text-gray-400 cursor-pointer dark:hover:text-white hover:text-black dark:text-gray-400" text
-            :class="[todoStore.currentFilter === filter ? 'text-blue-400 dark:text-blue-400 dark:hover:text-blue-400 font-bold dark' : '']">
+            class="cursor-pointer hover:text-black dark:hover:text-white dark:text-gray-400"
+            :class="[todoStore.currentFilter === filter ? 'text-blue-400 dark:text-blue-500 hover:text-blue-400 font-bold' : '']">
             {{ filter }}
         </span>
     </div>
