@@ -20,6 +20,11 @@ const router = createRouter({
       name: 'responsive-landing-page',
       component: LandingPage
     },
+    {
+      path: '/notification-page',
+      name: 'notification-page',
+      component: LandingPage
+    },
   ]
 })
 
