@@ -6,7 +6,7 @@
     "cypress.config.*",
     "nightwatch.conf.*",
     "playwright.config.*"
-  ],
+, "projects/todo-app/vitest.config.ts", "projects/todo-app/vite.config.ts"  ],
   "compilerOptions": {
     "composite": true,
     "module": "ESNext",

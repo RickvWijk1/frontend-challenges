@@ -13,6 +13,9 @@ export default defineConfig({
       }
     })
   ],
+  build: {
+    outDir: "../../dist/todo-app",  // Ensure build output goes to dist/
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

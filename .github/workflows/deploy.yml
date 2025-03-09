@@ -1,0 +1,35 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          cd projects/todo-app && npm install
+        #   cd ../react-project && npm install
+
+      - name: Build projects
+        run: |
+          cd projects/todo-app && npm run build
+        #   cd ../react-project && npm run build
+
+      - name: Copy static HTML project
+        run: |
+          mkdir -p dist/responsive-landing-page
+          cp -r projects/responsive-landing-page/* dist/responsive-landing-page/
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: dist
