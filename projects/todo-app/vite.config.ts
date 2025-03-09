@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/frontend-challenges/projects/todo-app/',
+  base: '/todo-app',
   plugins: [
     vue({
       script: {
@@ -14,7 +14,7 @@ export default defineConfig({
     })
   ],
   build: {
-    outDir: "../../dist/frontend-challenges/projects/todo-app", // Ensure this is correct
+    outDir: "../../dist/todo-app",  // Ensure build output goes to dist/
   },
   resolve: {
     alias: {
