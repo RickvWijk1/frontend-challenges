@@ -14,7 +14,7 @@ export default defineConfig({
     })
   ],
   build: {
-    outDir: "../../dist/todo-app",  // Ensure build output goes to dist/
+    outDir: "../../dist/frontend-challenges/projects/todo-app", // Ensure this is correct
   },
   resolve: {
     alias: {
