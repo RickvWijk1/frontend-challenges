@@ -25,8 +25,8 @@ jobs:
 
       - name: Copy notifications-page build to dist
         run: |
-          mkdir -p dist
-          cp -r projects/notifications-page/out/* dist/notifications-page/
+          mkdir -p dist/frontend-challenges/notifications-page
+          cp -r projects/notifications-page/out/* dist/frontend-challenges/notifications-page/
 
       - name: Copy static HTML project
         run: |
