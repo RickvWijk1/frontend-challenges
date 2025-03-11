@@ -15,19 +15,19 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd projects/todo-app && npm install
-        #   cd ../react-project && npm install
+          cd projects/todo-app && npm i
+          cd projects/notifications-page && npm i
 
       - name: Build projects
         run: |
           cd projects/todo-app && npm run build
-        #   cd ../react-project && npm run build
+          cd projects/notifications-page && npm run build
 
       - name: Copy static HTML project
         run: |
           mkdir -p dist/responsive-landing-page
           cp -r projects/responsive-landing-page/* dist/responsive-landing-page/
-          
+
       - name: Copy index.html from repo
         run: cp projects/index.html dist/index.html
 
