@@ -4,7 +4,7 @@ const nextConfig = {
     domains: ["localhost"],
   },
   basePath: "/frontend-challenges/notifications-page",
-  output: "standalone",
+  output: "export",
 };
 
 export default nextConfig;
