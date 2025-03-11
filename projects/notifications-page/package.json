@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "postbuild": "cp -r out ../../dist/notifications-page",
+    "postbuild": "cp -r out ../../dist/frontend-challenges/notifications-page",
     "start": "next start",
     "lint": "next lint"
   },
