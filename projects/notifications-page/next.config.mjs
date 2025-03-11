@@ -4,6 +4,7 @@ const nextConfig = {
     domains: ["localhost"],
   },
   basePath: "/frontend-challenges/notifications-page",
+  assetPrefix: "/frontend-challenges/notifications-page",
   output: "export",
 };
 
