@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[560],{1560:e=>{e.exports=JSON.parse('["My first tournament today!","5 end-game strategies to increase your win rate","Maybe next week?","What a game that was!\uD83D\uDD25\uD83D\uDD25\uD83D\uDD25"]')}}]);
