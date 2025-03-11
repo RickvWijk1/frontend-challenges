@@ -15,13 +15,18 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd projects/todo-app && npm i
-          cd ../notifications-page && npm i
+          cd projects/todo-app && npm install
+          cd ../notifications-page && npm install
 
       - name: Build projects
         run: |
-          cd projects/todo-app && npm run build 
+          cd projects/todo-app && npm run build
           cd ../notifications-page && npm run build
+
+      - name: Copy notifications-page build to dist
+        run: |
+          mkdir -p dist
+          cp -r projects/notifications-page/out/* dist/notifications-page/
 
       - name: Copy static HTML project
         run: |
