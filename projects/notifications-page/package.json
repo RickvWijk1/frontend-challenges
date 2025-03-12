@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "postbuild": "mkdir -p ../../dist/notifications-page && cp -r out/* ../../dist/notifications-page",
+    "postbuild": "mkdir ..\\..\\dist\\notifications-page && xcopy out ..\\..\\dist\\notifications-page /E /H /C /I",
     "start": "next start",
     "lint": "next lint"
   },
