@@ -28,7 +28,7 @@ jobs:
       - name: Build projects
         run: |
           cd projects/todo-app && npm run build
-          cd ../notifications-page && npm run Build
+          cd ../notifications-page && npm run build
       
       - name: Create .nojekyll file
         run: touch dist/notifications-page/.nojekyll
