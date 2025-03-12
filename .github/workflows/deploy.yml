@@ -30,10 +30,6 @@ jobs:
           cd projects/todo-app && npm run build
           cd ../notifications-page && npm run build
 
-      - name: Copy notifications-page build to dist
-        run: |
-          cd projects/notifications-page && npm run postbuild
-
       - name: Copy static HTML project
         run: |
           mkdir -p dist/responsive-landing-page
