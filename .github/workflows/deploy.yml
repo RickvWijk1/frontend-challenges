@@ -32,8 +32,7 @@ jobs:
 
       - name: Copy notifications-page build to dist
         run: |
-          mkdir -p dist/notifications-page
-          cp -r projects/notifications-page/out/* dist/notifications-page/
+          cd projects/notifications-page && npm run postbuild
 
       - name: Copy static HTML project
         run: |
