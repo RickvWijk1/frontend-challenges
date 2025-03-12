@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd projects/todo-app && npm install
-          cd ../notifications-page && npm install
+          cd ../notifications-page && npm install && npm install --save-dev cpx mkdirp
 
       - name: Build projects
         run: |
