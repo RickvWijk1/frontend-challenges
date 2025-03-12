@@ -34,7 +34,7 @@ export default function Home() {
         description:
           notificationDescriptions[
             randomNumber(0, notificationDescriptions.length)
-          ] || "No status",
+          ] || "Not found a status",
         message: randomBoolean()
           ? notificationMessages[randomNumber(0, notificationMessages.length)]
           : false,
