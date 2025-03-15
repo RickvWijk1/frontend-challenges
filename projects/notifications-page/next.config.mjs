@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 
-const withImages = require("next-images");
-module.exports = withImages();
-
 const nextConfig = {
   env: {
     PUBLIC_URL: "/frontend-challenges/notifications-page/",
