@@ -2,6 +2,8 @@
 const nextConfig = {
   images: {
     domains: ["localhost"],
+    loader: "imgix",
+    path: "",
   },
   basePath: "/frontend-challenges/notifications-page",
   assetPrefix: "/frontend-challenges/notifications-page",
