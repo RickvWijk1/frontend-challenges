@@ -1,13 +1,10 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  env: {
-    PUBLIC_URL: "/frontend-challenges/notifications-page/",
-  },
   images: {
     domains: ["localhost"],
     // loader: "imgix",
-    path: "/frontend-challenges/notifications-page/",
+    path: "/frontend-challenges/notifications-page/_next/static",
   },
   basePath: "/frontend-challenges/notifications-page",
   assetPrefix: "/frontend-challenges/notifications-page",
