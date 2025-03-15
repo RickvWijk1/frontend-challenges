@@ -7,7 +7,7 @@ const nextConfig = {
   images: {
     domains: ["localhost"],
     // loader: "imgix",
-    // path: "/frontend-challenges/notifications-page/static",
+    path: "/frontend-challenges/notifications-page/_next/static",
   },
   basePath: "/frontend-challenges/notifications-page",
   assetPrefix: "/frontend-challenges/notifications-page",
