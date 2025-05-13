@@ -44,17 +44,15 @@ export const useTodoStore = defineStore('todo', () => {
 
     const getTodoItems = async () => {
         try {
-            // Fetch data from API
             const response: { todos: Array<{ id: number; todo: string; completed: boolean }> } = 
                 await getApiData('https://dummyjson.com/todos');
     
             // Extract the first 10 todos
             const apiTodoList = response.todos.slice(0, 10); 
     
-            // Map the API response to match your TodoItem structure
             todoList.value = apiTodoList.map(todo => ({
                 id: todo.id,
-                text: todo.todo,  // Use `todo` instead of `title`
+                text: todo.todo,
                 completed: todo.completed
             }));
         } catch (error) {
