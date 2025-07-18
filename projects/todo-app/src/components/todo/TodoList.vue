@@ -6,10 +6,16 @@
             <div class="grid justify-between grid-cols-[auto_auto_1fr_auto] gap-4 items-center">
                 <icon-drag class="cursor-pointer" />
                 <checkbox v-model="item.completed" />
-                <p :class="{ 'line-through': item.completed }">
-                    {{ item.text }}
-                </p>
-                <icon-cross class="cursor-pointer" @click="removeTodoItem(item.id)" />
+                <div>
+                    <p :class="{ 'line-through': item.completed }">
+                        {{ item.text }}
+                    </p>
+                    <!-- <textarea v-model="item.text" placeholder="Create a new todo..."
+                class="w-full outline-none resize-none dark:bg-slate-800" rows="1" ref="todoTextarea" /> -->
+                    <img v-if="item.imagePath" :src="item.imagePath" alt="Uploaded image"
+                        class="object-contain max-w-full mt-2 border rounded-md" />
+                </div>
+                <icon-cross class="cursor-pointer dark:fill-white" @click="removeTodoItem(item.id)" />
             </div>
         </div>
         <div class="flex justify-between px-6 py-4 text-gray-400">

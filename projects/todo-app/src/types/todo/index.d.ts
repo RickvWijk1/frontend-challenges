@@ -1,6 +1,7 @@
 declare interface TodoItem {
     id: number,
     text: string,
+    imagePath: string | null,
     completed: boolean
 }
 
