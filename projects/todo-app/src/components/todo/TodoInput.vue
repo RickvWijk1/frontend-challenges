@@ -116,7 +116,7 @@ const autoResize = (value: string) => {
 };
 
 const submit = () => {
-    if (todoItem.value.text !== '') {
+    if (todoItem.value.text !== '' || uploadedImage.value.file) {
         todoStore.addTodoItem({
             text: todoItem.value.text,
             imagePath: uploadedImage.value.previewUrl || null,

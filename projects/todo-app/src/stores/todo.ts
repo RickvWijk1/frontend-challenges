@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { getApiData } from '@/api/todo';
 
@@ -7,6 +7,26 @@ export const useTodoStore = defineStore('todo', () => {
     const todoList = ref<Array<TodoItem>>([]);
     const currentFilter = ref<Filters>('All');
     const currentId = ref(1);
+
+    // Load saved todos from localStorage
+    const savedTodos = localStorage.getItem('todoList');
+    if (savedTodos) {
+        try {
+            const parsed = JSON.parse(savedTodos);
+            todoList.value = parsed.map((todo: any) => ({
+                id: todo.id,
+                text: todo.text,
+                completed: todo.completed,
+                imagePath: todo.imagePath ?? null
+            }));
+            // Update currentId so new todos get unique IDs
+            const maxId = Math.max(...todoList.value.map(todo => todo.id), 0);
+            currentId.value = maxId + 1;
+        } catch (e) {
+            console.error('Failed to parse saved todos from localStorage:', e);
+        }
+    }
+
 
     //getters
     const filteredList = computed(() => {
@@ -47,7 +67,13 @@ export const useTodoStore = defineStore('todo', () => {
         todoList.value = todoList.value.filter((item: TodoItem) => !item.completed);
     }
 
+    watch(todoList, (newList) => {
+        localStorage.setItem('todoList', JSON.stringify(newList));
+    }, { deep: true });
+
     const getTodoItems = async () => {
+        if (todoList.value.length > 0) return; // already have data loaded
+
         try {
             // Fetch data from API
             const response: { todos: Array<{ id: number; todo: string; completed: boolean }> } =
