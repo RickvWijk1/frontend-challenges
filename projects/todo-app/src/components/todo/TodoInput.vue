@@ -44,6 +44,7 @@ import IconImage from '@/components/icons/IconImage.vue';
 import IconSend from '@/components/icons/IconSend.vue';
 import IconCross from '@/components/icons/IconCross.vue';
 import { useFocus } from '@/composables/useFocus';
+import { fileToBase64 } from '@/utils/use-files';
 
 // --- Refs and State ---
 const todoStore = useTodoStore();
@@ -74,15 +75,17 @@ const getTodoList = async () => {
 
 const { isFocused: isTextareaFocused, onFocus, onBlur } = useFocus();
 
-const handleImageUpload = (event: Event) => {
+const handleImageUpload = async (event: Event) => {
     const file = (event.target as HTMLInputElement)?.files?.[0];
     if (!file) return;
 
     imageAspectClass.value = '';
 
+    const previewUrl = await fileToBase64(file);
+
     uploadedImage.value = {
         file,
-        previewUrl: URL.createObjectURL(file)
+        previewUrl // This is a 'data:image/...;base64,...' string
     };
 };
 

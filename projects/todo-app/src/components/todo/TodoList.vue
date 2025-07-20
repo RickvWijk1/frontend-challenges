@@ -19,7 +19,7 @@
                     <!-- <textarea v-model="item.text" placeholder="Create a new todo..."
                 class="w-full outline-none resize-none dark:bg-slate-800" rows="1" ref="todoTextarea" /> -->
                     <img v-if="item.imagePath" :src="item.imagePath" alt="Uploaded image"
-                        class="object-contain max-w-full mt-2 border rounded-md" />
+                        class="object-contain max-w-full mt-2 rounded-md" />
                 </div>
                 <button type="button" aria-label="Remove todo item" title="Remove todo item"
                     @click="removeTodoItem(item.id)" class="p-4 rounded-full cursor-pointer">
