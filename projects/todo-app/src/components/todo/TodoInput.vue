@@ -1,20 +1,19 @@
 <template>
-    <div
-        class="grid justify-between w-full grid-cols-[auto_1fr_auto] gap-4 px-6 py-4 bg-white rounded-md dark:text-white dark:bg-slate-800">
+    <div class="grid justify-between w-full grid-cols-[auto_1fr_auto] gap-4 px-6 py-4 bg-white rounded-md dark:text-white dark:bg-slate-800"
+        :class="[isTextareaFocused ? 'ring-2 ring-blue-400' : 'ring-0']">
         <checkbox v-model="todoItem.completed" />
         <div class="grid w-full grid-rows-[1fr_auto]">
-            <textarea v-model="todoItem.text" placeholder="Create a new todo..."
-                class="w-full outline-none resize-none dark:bg-slate-800" rows="1" ref="todoTextarea" />
+            <textarea v-model="todoItem.text" autofocus placeholder="Create a new todo..."
+                class="w-full outline-none resize-none dark:bg-slate-800" rows="1" ref="todoTextarea" @focus="onFocus"
+                @blur="onBlur" />
             <div class="relative w-full mt-2 max-w-60" v-if="uploadedImage.previewUrl">
-                <!-- Wrapper div ensures position context -->
                 <img :src="uploadedImage.previewUrl" :class="['object-cover w-full', imageAspectClass]"
-                    alt="Uploaded image" @load="onImageLoad" />
+                    class="rounded-md" alt="Uploaded image" @load="onImageLoad" />
                 <button type="button" aria-label="Remove image" title="Remove image" @click="removeImageUpload"
                     class="absolute flex items-center justify-center p-4 rounded-full cursor-pointer top-2 right-2 bg-slate-800/50 backdrop-blur-md hover:bg-slate-800/20">
                     <IconCross class="w-3 h-3 stroke-white fill-black dark:fill-white hover:text-blue-500" />
                 </button>
             </div>
-
         </div>
         <div class="flex gap-2">
             <div>
@@ -44,6 +43,7 @@ import Checkbox from '@/components/Checkbox.vue';
 import IconImage from '@/components/icons/IconImage.vue';
 import IconSend from '@/components/icons/IconSend.vue';
 import IconCross from '@/components/icons/IconCross.vue';
+import { useFocus } from '@/composables/useFocus';
 
 // --- Refs and State ---
 const todoStore = useTodoStore();
@@ -71,6 +71,8 @@ const imageAspectClass = ref<string | null>('');
 const getTodoList = async () => {
     await todoStore.getTodoItems();
 };
+
+const { isFocused: isTextareaFocused, onFocus, onBlur } = useFocus();
 
 const handleImageUpload = (event: Event) => {
     const file = (event.target as HTMLInputElement)?.files?.[0];
@@ -129,7 +131,6 @@ const submit = () => {
         todoItem.value.text = '';
         removeImageUpload();
     }
-
 };
 
 // --- Lifecycle ---

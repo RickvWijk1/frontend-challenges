@@ -1,10 +1,14 @@
 <template>
     <div class="w-full bg-white rounded-md shadow-xl dark:bg-slate-800 dark:text-white">
-        <div class="px-6 py-4 border border-gray-200 border-solid dark:border-gray-700 dark:border first:rounded-t-md last:rounded-b-md"
-            v-for="(item, index) in list" draggable="true" @dragstart="startDrag($event, index)"
-            @drop="onDrop($event, index)" @dragover.prevent @dragenter.prevent :key="item.id">
+        <div class="px-6 py-4 transition-all duration-200 ease-in-out border border-gray-200 border-solid dark:border-gray-700 dark:border first:rounded-t-md last:rounded-b-md"
+            v-for="(item, index) in list" draggable="true" @dragstart="startDrag($event, index)" @dragend="onDragEnd"
+            :key="item.id" @drop="onDrop($event, index)" @dragover.prevent @dragenter.prevent="onDragEnter(index)"
+            @dragleave="onDragLeave(index)" :class="[
+                draggingIndex === index ? 'opacity-50 scale-[0.8]' : '',
+                dragOverIndex === index && draggingIndex !== index ? 'ring-2 ring-blue-400' : ''
+            ]">
             <div class="grid justify-between grid-cols-[auto_auto_1fr_auto] gap-4 items-center">
-                <button type="button" aria-label="Drag item" title="Drag item">
+                <button type="button" aria-label="Drag todo item" title="Drag todo item">
                     <icon-drag class="cursor-pointer" />
                 </button>
                 <checkbox v-model="item.completed" />
@@ -18,8 +22,7 @@
                         class="object-contain max-w-full mt-2 border rounded-md" />
                 </div>
                 <button type="button" aria-label="Remove todo item" title="Remove todo item"
-                    @click="removeTodoItem(item.id)"
-                    class="flex items-center justify-center p-4 rounded-full cursor-pointer bg-slate-800/50 backdrop-blur-md hover:bg-slate-800/20">
+                    @click="removeTodoItem(item.id)" class="p-4 rounded-full cursor-pointer">
                     <icon-cross class=" dark:fill-white" />
                 </button>
             </div>
@@ -34,7 +37,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useTodoStore } from '@/stores/todo';
 import { useDeviceStore } from '@/stores/device';
 import Checkbox from '@/components/Checkbox.vue';
@@ -44,6 +47,10 @@ import TodoFilters from '@/components/todo/TodoFilters.vue';
 
 const todoStore = useTodoStore();
 const deviceStore = useDeviceStore();
+
+const dragOverMap = ref<{ [key: number]: number }>({});
+const draggingIndex = ref<number | null>(null);
+const dragOverIndex = ref<number | null>(null);
 
 const list = computed(() => todoStore.filteredList);
 
@@ -56,14 +63,37 @@ const startDrag = ((event: DragEvent, index: number) => {
         event.dataTransfer.dropEffect = 'move';
         event.dataTransfer.effectAllowed = 'move';
         event.dataTransfer.setData('itemIndex', String(index));
+        draggingIndex.value = index;
     }
 });
+
+const onDragEnter = (index: number) => {
+    dragOverMap.value[index] = (dragOverMap.value[index] || 0) + 1;
+    dragOverIndex.value = index;
+};
+
+const onDragLeave = (index: number) => {
+    dragOverMap.value[index] = (dragOverMap.value[index] || 0) - 1;
+    if (dragOverMap.value[index] <= 0) {
+        dragOverMap.value[index] = 0;
+        if (dragOverIndex.value === index) {
+            dragOverIndex.value = null;
+        }
+    }
+};
+
+const onDragEnd = () => {
+    draggingIndex.value = null;
+    dragOverIndex.value = null;
+};
 
 const onDrop = ((event: DragEvent, targetIndex: number) => {
     if (event.dataTransfer) {
         const startIndex = parseInt(event.dataTransfer.getData('itemIndex'));
         const draggedItem = list.value.splice(startIndex, 1)[0];
         list.value.splice(targetIndex, 0, draggedItem);
+
+        onDragEnd();
     }
 })
 
