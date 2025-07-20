@@ -27,7 +27,6 @@ export const useTodoStore = defineStore('todo', () => {
         }
     }
 
-
     //getters
     const filteredList = computed(() => {
         if (currentFilter.value === 'All') {
@@ -67,10 +66,6 @@ export const useTodoStore = defineStore('todo', () => {
         todoList.value = todoList.value.filter((item: TodoItem) => !item.completed);
     }
 
-    watch(todoList, (newList) => {
-        localStorage.setItem('todoList', JSON.stringify(newList));
-    }, { deep: true });
-
     const getTodoItems = async () => {
         if (todoList.value.length > 0) return; // already have data loaded
 
@@ -96,6 +91,10 @@ export const useTodoStore = defineStore('todo', () => {
             console.error('Error fetching todo items:', error);
         }
     };
+
+    watch(todoList, (newList) => {
+        localStorage.setItem('todoList', JSON.stringify(newList));
+    }, { deep: true });
 
     return {
         todoList,

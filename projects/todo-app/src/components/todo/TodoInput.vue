@@ -5,13 +5,16 @@
         <div class="grid w-full grid-rows-[1fr_auto]">
             <textarea v-model="todoItem.text" placeholder="Create a new todo..."
                 class="w-full outline-none resize-none dark:bg-slate-800" rows="1" ref="todoTextarea" />
-            <div class="relative mt-2" v-if="uploadedImage.previewUrl">
-                <img :src="uploadedImage.previewUrl" alt="Uploaded image" class="object-contain max-w-full" />
-                <div @click="removeImageUpload"
-                    class="absolute flex items-center justify-center p-4 rounded-full cursor-pointer bg-slate-800/50 top-2 right-2 backdrop-blur-md hover:bg-slate-800/20">
+            <div class="relative w-full mt-2 max-w-60" v-if="uploadedImage.previewUrl">
+                <!-- Wrapper div ensures position context -->
+                <img :src="uploadedImage.previewUrl" :class="['object-cover w-full', imageAspectClass]"
+                    alt="Uploaded image" @load="onImageLoad" />
+                <button type="button" aria-label="Remove image" title="Remove image" @click="removeImageUpload"
+                    class="absolute flex items-center justify-center p-4 rounded-full cursor-pointer top-2 right-2 bg-slate-800/50 backdrop-blur-md hover:bg-slate-800/20">
                     <IconCross class="w-3 h-3 stroke-white fill-black dark:fill-white hover:text-blue-500" />
-                </div>
+                </button>
             </div>
+
         </div>
         <div class="flex gap-2">
             <div>
@@ -35,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, type Ref, watch } from 'vue';
+import { onMounted, ref, type Ref, watch } from 'vue';
 import { useTodoStore } from '@/stores/todo';
 import Checkbox from '@/components/Checkbox.vue';
 import IconImage from '@/components/icons/IconImage.vue';
@@ -62,32 +65,33 @@ const uploadedImage = ref<{
     previewUrl: null,
 });
 
-// --- Computed ---
-const list = computed(() => todoStore.todoList);
-const lastItem = computed(() => list.value.slice(-1)[0]);
+const imageAspectClass = ref<string | null>('');
 
 // --- Methods ---
 const getTodoList = async () => {
     await todoStore.getTodoItems();
 };
 
-const getImagePreview = (file: File): Promise<string> =>
-    new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    });
+const handleImageUpload = (event: Event) => {
+    const file = (event.target as HTMLInputElement)?.files?.[0];
+    if (!file) return;
 
-const handleImageUpload = async (event: Event) => {
-    const input = event.target as HTMLInputElement;
-    const file = input.files?.[0];
+    imageAspectClass.value = '';
 
-    if (file && file.type.startsWith('image/')) {
-        const previewUrl = await getImagePreview(file);
-        uploadedImage.value = { file, previewUrl };
-        todoItem.value.imagePath = previewUrl;
-    }
+    uploadedImage.value = {
+        file,
+        previewUrl: URL.createObjectURL(file)
+    };
+};
+
+// Calculate aspect ratio after image is loaded
+const onImageLoad = (event: Event) => {
+    const img = event.target as HTMLImageElement;
+    const aspect = img.naturalWidth / img.naturalHeight;
+
+    imageAspectClass.value = aspect > 1.1
+        ? 'aspect-video'
+        : 'aspect-[2/3]'; // Adjust as needed for portrait images
 };
 
 const triggerImageUpload = () => {

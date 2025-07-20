@@ -4,7 +4,9 @@
             v-for="(item, index) in list" draggable="true" @dragstart="startDrag($event, index)"
             @drop="onDrop($event, index)" @dragover.prevent @dragenter.prevent :key="item.id">
             <div class="grid justify-between grid-cols-[auto_auto_1fr_auto] gap-4 items-center">
-                <icon-drag class="cursor-pointer" />
+                <button type="button" aria-label="Drag item" title="Drag item">
+                    <icon-drag class="cursor-pointer" />
+                </button>
                 <checkbox v-model="item.completed" />
                 <div>
                     <p :class="{ 'line-through': item.completed }">
@@ -15,7 +17,11 @@
                     <img v-if="item.imagePath" :src="item.imagePath" alt="Uploaded image"
                         class="object-contain max-w-full mt-2 border rounded-md" />
                 </div>
-                <icon-cross class="cursor-pointer dark:fill-white" @click="removeTodoItem(item.id)" />
+                <button type="button" aria-label="Remove todo item" title="Remove todo item"
+                    @click="removeTodoItem(item.id)"
+                    class="flex items-center justify-center p-4 rounded-full cursor-pointer bg-slate-800/50 backdrop-blur-md hover:bg-slate-800/20">
+                    <icon-cross class=" dark:fill-white" />
+                </button>
             </div>
         </div>
         <div class="flex justify-between px-6 py-4 text-gray-400">
