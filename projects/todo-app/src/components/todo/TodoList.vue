@@ -1,29 +1,30 @@
 <template>
     <div class="w-full bg-white rounded-md shadow-xl dark:bg-slate-800 dark:text-white">
-        <div class="px-6 py-4 transition-all duration-200 ease-in-out border border-gray-200 border-solid dark:border-gray-700 dark:border first:rounded-t-md last:rounded-b-md"
+        <div class="px-1 py-4 transition-all duration-200 ease-in-out border border-gray-200 border-solid dark:border-gray-700 dark:border first:rounded-t-md last:rounded-b-md"
             v-for="(item, index) in list" draggable="true" @dragstart="startDrag($event, index)" @dragend="onDragEnd"
             :key="item.id" @drop="onDrop($event, index)" @dragover.prevent @dragenter.prevent="onDragEnter(index)"
             @dragleave="onDragLeave(index)" :class="[
                 draggingIndex === index ? 'opacity-50 scale-[0.8]' : '',
                 dragOverIndex === index && draggingIndex !== index ? 'ring-2 ring-blue-400' : ''
             ]">
-            <div class="grid justify-between grid-cols-[auto_auto_1fr_auto] gap-4 items-center">
-                <button type="button" aria-label="Drag todo item" title="Drag todo item">
-                    <icon-drag class="cursor-pointer" />
-                </button>
-                <checkbox v-model="item.completed" />
-                <div>
-                    <p :class="{ 'line-through': item.completed }">
-                        {{ item.text }}
-                    </p>
-                    <!-- <textarea v-model="item.text" placeholder="Create a new todo..."
-                class="w-full outline-none resize-none dark:bg-slate-800" rows="1" ref="todoTextarea" /> -->
-                    <img v-if="item.imagePath" :src="item.imagePath" alt="Uploaded image"
-                        class="object-contain max-w-full mt-2 rounded-md" />
+            <div class="grid justify-between grid-cols-[auto_1fr_auto] gap-2 items-center">
+                <div class="p-4 cursor-grab active:cursor-grabbing" role="button" tabindex="0"
+                    aria-label="Drag todo item" title="Drag todo item">
+                    <icon-drag />
+                </div>
+                <div class="flex items-center w-full gap-4">
+                    <checkbox v-model="item.completed" />
+                    <div>
+                        <p :class="{ 'line-through': item.completed }">
+                            {{ item.text }}
+                        </p>
+                        <img v-if="item.imagePath" :src="item.imagePath" alt="Uploaded image"
+                            class="object-contain max-w-full mt-2 rounded-md" />
+                    </div>
                 </div>
                 <button type="button" aria-label="Remove todo item" title="Remove todo item"
                     @click="removeTodoItem(item.id)" class="p-4 rounded-full cursor-pointer">
-                    <icon-cross class=" dark:fill-white" />
+                    <icon-cross class="dark:fill-white" />
                 </button>
             </div>
         </div>
